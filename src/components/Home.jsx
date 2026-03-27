@@ -1,17 +1,22 @@
+import { useState } from "react";
+import Sidebar from "./Sidebar";
+import Topbar from "./Topbar";
+import Dashboard from "./Dashboard";
 import Routing from "../utils/Routing";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
 
-const Home = () => {
+export default function Home() {
+  const [open, setOpen] = useState(false);
 
   return (
-    <>
-      <Navbar/>
-      <Routing/>
-      <Footer/>
-      
-    </>
-  );
-};
+    <div className="flex h-screen bg-gray-100">
+    
 
-export default Home;
+      {/* Main */}
+      <div className="flex-1 flex flex-col">
+        
+        <Dashboard />
+        <Routing/>
+      </div>
+    </div>
+  );
+}
