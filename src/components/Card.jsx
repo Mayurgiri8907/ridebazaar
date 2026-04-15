@@ -6,7 +6,7 @@ const Card = ({ vehicle, handelclick }) => {
   
   
   return (
-    <div className="w-full max-w-sm mx-auto bg-white rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition duration-300">
+    <div className="m-10 w-full max-w-sm mx-auto bg-white rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition duration-300">
       
       {/* IMAGE */}
       <div className="overflow-hidden">

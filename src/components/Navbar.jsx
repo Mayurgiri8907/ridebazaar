@@ -24,7 +24,7 @@ function Navbar() {
 
                 {/* LOGO */}
                 <div className="flex items-center gap-2">
-                    <img src="/ridelogo.png" alt="logo" className="h-10" />
+                    <img src="https://www.nicepng.com/png/full/790-7903108_car-logo-clipart-maruti-car-car-vector.png" alt="logo" className="h-8" />
                     <h1 className="text-xl font-semibold">
                         Ride<span className="text-blue-600">Bazaar</span>
                     </h1>
