@@ -6,6 +6,7 @@ import Contact from '../components/Contact'
 import Index from '../components/Home'
 import Main from '../components/Main'
 import Userlogin from '../components/Userlogin'
+import Single from '../components/Single'
 
 function Routing() {
   return (
@@ -16,6 +17,7 @@ function Routing() {
           <Route path="/rate" element={<Rate />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Userlogin />} />
+          <Route path="/single/:id" element={<Single />} />
         </Routes>
     </div>
   )

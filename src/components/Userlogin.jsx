@@ -194,12 +194,7 @@ const handleSignup = async (data) => {
                   className="w-full p-3 border rounded-xl outline-none focus:border-blue-500"
                   {...register("email")}
                 />
-                <span
-                  onClick={() => setShowSignupPass(!showSignupPass)}
-                  className="absolute right-3 top-3 cursor-pointer text-gray-600"
-                >
-                  {showSignupPass ? <EyeOff size={18} /> : <Eye size={18} />}
-                </span>
+                
               </div>
 
               {/* CONFIRM PASSWORD */}

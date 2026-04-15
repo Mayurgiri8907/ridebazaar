@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Phone, Car, Bike, User, House, Book } from "lucide-react";
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 
 
@@ -9,7 +10,7 @@ function Navbar() {
     const [open, setOpen] = useState(false);
 
     // 🔥 Demo login state (later connect with auth)
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -95,6 +96,7 @@ function Navbar() {
                                             setUserIsLoggedIn(false);   // 🔥 important
                                             setProfileOpen(false);
                                             setOpen(false);
+                                            toast.success('logout successfully...');
                                             navigate("/");
 
                                         }}
@@ -169,6 +171,7 @@ function Navbar() {
                                     setUserIsLoggedIn(false);   // 🔥 important
                                     setProfileOpen(false);
                                     setOpen(false);
+                                    toast.success('logout successfully...');
                                     navigate("/");
                                 }}
                                 className="bg-red-500 text-white py-2 rounded-full"
