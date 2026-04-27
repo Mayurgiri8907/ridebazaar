@@ -25,7 +25,7 @@ const reviews = [
 const Review = () => {
   const [current, setCurrent] = useState(0);
 
-  // 🔥 Auto Slide (5 sec)
+  //  Auto Slide (5 sec)
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % reviews.length);
@@ -43,15 +43,15 @@ const Review = () => {
   return (
     <div className="bg-gray-100 py-16">
 
-      {/* 🔥 HEADING */}
+      {/*  HEADING */}
       <h1 className="mt-20 text-3xl font-bold text-center mb-12">
         What Our <span className="text-blue-600">Users Say</span>
       </h1>
 
-      {/* 🔹 SLIDER WRAPPER */}
+      {/*  SLIDER WRAPPER */}
       <div className="relative max-w-3xl mx-auto overflow-hidden">
 
-        {/* 🔥 SLIDE TRACK */}
+        {/*  SLIDE TRACK */}
         <div
           className="flex transition-transform duration-500"
           style={{ transform: `translateX(-${current * 100}%)` }}
@@ -62,12 +62,7 @@ const Review = () => {
               {/* CARD */}
               <div className="bg-white rounded-2xl shadow-md p-8 text-center">
 
-                {/* IMAGE */}
-                <img
-                  src={review.img}
-                  alt={review.name}
-                  className="w-16 h-16 rounded-full mx-auto mb-4 border-2 border-blue-500"
-                />
+                
 
                 {/* STARS */}
                 <div className="flex justify-center mb-3">
@@ -96,7 +91,7 @@ const Review = () => {
           ))}
         </div>
 
-        {/* ⬅️➡️ BUTTONS */}
+        {/*  BUTTONS */}
         <button
           onClick={prev}
           className="absolute left-2 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100"
@@ -112,7 +107,7 @@ const Review = () => {
         </button>
       </div>
 
-      {/* 🔘 DOTS */}
+      {/*  DOTS */}
       <div className="flex justify-center mt-6 gap-2">
         {reviews.map((_, index) => (
           <button

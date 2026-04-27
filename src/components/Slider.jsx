@@ -21,7 +21,7 @@ const slides = [
 const Slider = () => {
   const [current, setCurrent] = useState(0);
 
-  // 🔥 Auto Slide (30 sec)
+  //  Auto Slide (30 sec)
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
@@ -43,7 +43,7 @@ const Slider = () => {
   return (
     <div className="relative w-full h-[70vh] overflow-hidden">
 
-      {/* 🔹 Slides */}
+      {/*  Slides */}
       {slides.map((slide, index) => (
         <div
           key={index}
@@ -70,7 +70,7 @@ const Slider = () => {
         </div>
       ))}
 
-      {/* 🔥 LEFT BUTTON */}
+      {/*  LEFT BUTTON */}
       <button
         onClick={prevSlide}
         className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow transition"
@@ -78,7 +78,7 @@ const Slider = () => {
         <ChevronLeft />
       </button>
 
-      {/* 🔥 RIGHT BUTTON */}
+      {/*  RIGHT BUTTON */}
       <button
         onClick={nextSlide}
         className="absolute top-1/2 right-4 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow transition"
@@ -86,7 +86,7 @@ const Slider = () => {
         <ChevronRight />
       </button>
 
-      {/* 🔘 DOTS */}
+      {/*  DOTS */}
       <div className="absolute bottom-5 w-full flex justify-center gap-3">
         {slides.map((_, index) => (
           <button

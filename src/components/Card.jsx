@@ -31,9 +31,12 @@ const Card = ({ vehicle, handelclick }) => {
           </h3>
         </div>
 
+        <p className="text-sm text-gray-500 mb-3">
+          Total Price ₹{vehicle.totalprice}
+        </p>
         {/* PRICE */}
         <p className="text-sm text-gray-500 mb-3">
-          ₹{vehicle.price}
+          Boking Price ₹{vehicle.price}
         </p>
 
         {/* BUTTON */}

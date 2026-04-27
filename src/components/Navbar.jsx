@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 function Navbar() {
     const [open, setOpen] = useState(false);
 
-    // 🔥 Demo login state (later connect with auth)
+    //  Demo login state (later connect with auth)
     // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ function Navbar() {
 
                 {/* LOGO */}
                 <div className="flex items-center gap-2">
-                    <img src="https://www.nicepng.com/png/full/790-7903108_car-logo-clipart-maruti-car-car-vector.png" alt="logo" className="h-8" />
+                    <img src="logo.png" alt="logo" className="h-8" />
                     <h1 className="text-xl font-semibold">
                         Ride<span className="text-blue-600">Bazaar</span>
                     </h1>
@@ -145,7 +145,7 @@ function Navbar() {
                         );
                     })}
 
-                    {/* 🔥 MOBILE LOGIN / PROFILE */}
+                    {/*  MOBILE LOGIN / PROFILE */}
                     {userisLoggedIn ? (
                         <div className="flex flex-col gap-2 mt-3">
 

@@ -6,7 +6,7 @@ const Footer = () => {
 
       <div className="max-w-7xl mx-auto px-5 py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
 
-        {/* 🔹 LOGO + ABOUT */}
+        {/*  LOGO + ABOUT */}
         <div>
           <h2 className="text-2xl font-bold text-white mb-4">
             Ride<span className="text-blue-500">Bazaar</span>
@@ -16,7 +16,7 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* 🔹 QUICK LINKS */}
+        {/*  QUICK LINKS */}
         <div>
           <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
           <ul className="space-y-2 text-sm">
@@ -28,7 +28,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* 🔹 CONTACT */}
+        {/*  CONTACT */}
         <div>
           <h3 className="text-lg font-semibold text-white mb-4">Contact</h3>
           <ul className="space-y-3 text-sm">
@@ -44,7 +44,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* 🔹 SOCIAL */}
+        {/*  SOCIAL */}
         <div>
           <h3 className="text-lg font-semibold text-white mb-4">Follow Us</h3>
           <div className="flex gap-4">
@@ -65,7 +65,7 @@ const Footer = () => {
 
       </div>
 
-      {/* 🔻 BOTTOM */}
+      {/*  BOTTOM */}
       <div className="border-t border-gray-800 text-center text-sm py-4">
         © {new Date().getFullYear()} RideBazaar. All rights reserved.
       </div>

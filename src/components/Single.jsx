@@ -1,21 +1,28 @@
 import { ChevronLeft, ChevronRight, Fuel } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "../utils/axios";
 import { toast } from "react-toastify";
+import Skeletonsingle from "./Skeletonsingle";
+
 
 const Single = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [singlevehicle, setSingleVehicle] = useState(null);
   const [current, setCurrent] = useState(0);
+  const [loading, setLoading] = useState(true);
+
 
   const getSingleVehicle = async () => {
     try {
       const res = await axios.get(`/api/vahical/${id}`);
       setSingleVehicle(res.data.data || {});
     } catch (error) {
-      console.error(error);
       toast.error("Failed to fetch vehicle");
+    }  finally {
+      setLoading(false);
     }
   };
 
@@ -23,99 +30,124 @@ const Single = () => {
     getSingleVehicle();
   }, [id]);
 
-  // ✅ Loading state
-  if (!singlevehicle) {
-    return <p className="text-center mt-10">Loading...</p>;
-  }
+  const handleBooking = () => {
+    const token = localStorage.getItem("token");
 
-  // ✅ FIX: Convert object images → array
+    if (!token) {
+      toast.error("Please login first");
+      navigate("/login");
+      return;
+    }
+
+    navigate("/delivery", {
+      state: {
+        price: singlevehicle.price,
+        vehicleId: singlevehicle._id,
+        name: singlevehicle.name,
+      },
+    });
+  };
+
+  if (!singlevehicle) {
+  return <Skeletonsingle />;
+}
+
   const images = singlevehicle?.images
     ? Object.values(singlevehicle.images)
     : [];
 
-  // ✅ No images case
-  if (images.length === 0) {
-    return <p className="text-center mt-10">No images available</p>;
-  }
+  const nextImage = () => {
+    setCurrent((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setCurrent((prev) =>
+      prev === 0 ? images.length - 1 : prev - 1
+    );
+  };
 
   return (
-  <div className="mt-6 md:mt-10 bg-gray-100 py-6 md:py-8 px-3 md:px-4">
-    <div className="m-10 max-w-7xl mx-auto bg-white p-4 md:p-6 rounded-lg shadow grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+    <div className="p-3 sm:p-4 bg-gray-100 min-h-screen">
+      <div className="mt-30 max-w-6xl mx-auto bg-white p-4 sm:p-6 rounded-xl shadow grid grid-cols-1 md:grid-cols-2 gap-6">
 
-      {/* LEFT SIDE */}
-      <div>
+        {/* LEFT - IMAGE SECTION */}
         <div className="relative">
+
+          {/* Main Image */}
           <img
-            src={images[current]}
-            alt="vehicle"
-            onError={(e) => (e.target.src = "/no-image.png")}
-            className="w-full h-56 sm:h-64 md:h-80 object-cover rounded-lg"
+            src={images[current] || "/no-image.png"}
+            className="w-full h-64 sm:h-80 object-cover rounded-lg"
           />
 
-          {/* LEFT BUTTON */}
-          <button
-            onClick={() =>
-              setCurrent(current === 0 ? images.length - 1 : current - 1)
-            }
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-white p-1.5 md:p-2 rounded-full shadow"
-          >
-            <ChevronLeft size={18} />
-          </button>
+          {/* Left Button */}
+          {images.length > 1 && (
+            <button
+              onClick={prevImage}
+              className="absolute top-1/2 left-2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow"
+            >
+              <ChevronLeft size={20} />
+            </button>
+          )}
 
-          {/* RIGHT BUTTON */}
-          <button
-            onClick={() =>
-              setCurrent((current + 1) % images.length)
-            }
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-white p-1.5 md:p-2 rounded-full shadow"
-          >
-            <ChevronRight size={18} />
-          </button>
+          {/* Right Button */}
+          {images.length > 1 && (
+            <button
+              onClick={nextImage}
+              className="absolute top-1/2 right-2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow"
+            >
+              <ChevronRight size={20} />
+            </button>
+          )}
+
+          {/* Thumbnails (Scrollable on mobile) */}
+          <div className="flex gap-2 mt-4 overflow-x-auto scrollbar-hide">
+            {images.map((img, i) => (
+              <img
+                key={i}
+                src={img}
+                onClick={() => setCurrent(i)}
+                className={`w-16 h-16 sm:w-20 sm:h-20 object-cover cursor-pointer rounded border ${
+                  current === i ? "border-orange-500" : ""
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
-        {/* THUMBNAILS */}
-        <div className="flex gap-2 md:gap-3 mt-3 md:mt-4 overflow-x-auto">
-          {images.map((img, i) => (
-            <img
-              key={i}
-              src={img}
-              alt="thumb"
-              onClick={() => setCurrent(i)}
-              className={`w-16 h-16 md:w-20 md:h-20 object-cover rounded cursor-pointer border ${
-                current === i ? "border-blue-600" : ""
-              }`}
-            />
-          ))}
+        {/* RIGHT - DETAILS */}
+        <div className="flex flex-col justify-between">
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold">
+              {singlevehicle.name}
+            </h1>
+
+            <p className="text-green-600 text-lg sm:text-xl mt-2 font-semibold">
+              ₹{singlevehicle.totalprice} / Toal Pring
+            </p>
+            <p className="text-green-600 text-lg sm:text-xl mt-2 font-semibold">
+              ₹{singlevehicle.price} / Booking Pring
+            </p>
+
+            <p className="mt-2 flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+              <Fuel size={16} /> {singlevehicle?.fuel?.join(", ")}
+            </p>
+
+            <p className="mt-4 text-gray-700 text-sm sm:text-base">
+              {singlevehicle.description}
+            </p>
+          </div>
+
+          {/* Book Button */}
+          <button
+            onClick={handleBooking}
+            className="mt-6 w-full bg-orange-500 hover:bg-orange-600 transition text-white py-3 rounded-lg text-base sm:text-lg font-medium"
+          >
+            Book Now
+          </button>
         </div>
       </div>
-
-      {/* RIGHT SIDE */}
-      <div>
-        <h1 className="text-xl md:text-2xl font-semibold mb-2">
-          {singlevehicle?.name}
-        </h1>
-
-        <p className="text-xl md:text-2xl text-green-600 font-bold mb-3">
-          ₹{singlevehicle?.price} / day
-        </p>
-
-        <div className="flex items-center gap-2 mb-3 md:mb-4 text-sm md:text-base">
-          <Fuel size={16} />
-          Fuel: {singlevehicle?.fuel?.join(", ")}
-        </div>
-
-        <p className="mb-4 md:mb-6 text-sm md:text-base text-gray-700">
-          {singlevehicle?.description}
-        </p>
-
-        <button className="w-full bg-orange-500 text-white py-2.5 md:py-3 rounded-lg hover:bg-orange-600 transition text-sm md:text-base">
-          Book Now
-        </button>
-      </div>
-
     </div>
-  </div>
-);
+  );
 };
 
 export default Single;

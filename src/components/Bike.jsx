@@ -3,21 +3,27 @@ import Card from './card'
 import axios from "../utils/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Skeleton from './Skeleton';
+
 
 function Bike() {
 
     const [vahicaldata, setVahicaldata] = useState([]);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     const showvahicaldata = async () => {
     try {
+      setLoading(true);
       const res = await axios.get("/api/vahical/bikeonly");
-      // ✅ store data
+      //  store data
       setVahicaldata(res.data.data || []);
     } catch (error) {
       console.error(error);
       toast.error("Failed to fetch vehicles");
-    } 
+    } finally {
+      setLoading(false); //  stop loading
+    }
   };
 
   useEffect(() => {
@@ -34,13 +40,17 @@ function Bike() {
     <div>
       <div className="m-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
             
-            {vahicaldata.map((data) => (
-              
-              <Card key={data._id} 
+            {/* ✅ Show Skeleton */}
+        {loading
+          ? Array(10)
+              .fill(0)
+              .map((_, i) => <Skeleton key={i} />)
+          : vahicaldata.map((data) => (
+              <Card
+                key={data._id}
                 vehicle={data}
                 handelclick={handelclick}
               />
-
             ))}
             
           </div>

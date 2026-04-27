@@ -4,7 +4,7 @@ const Contact = () => {
   return (
     <div className="bg-gray-100 py-12 px-4">
 
-      {/* 🔥 HEADING */}
+      {/*  HEADING */}
       <h1 className="mt-20 text-3xl font-bold text-center mb-10">
         Contact <span className="text-blue-600">Us</span>
       </h1>
@@ -22,7 +22,7 @@ const Contact = () => {
 
             <div className="flex items-center gap-3">
               <MapPin className="text-blue-600" />
-              <p>Mahuva, Gujarat, India</p>
+              <p>Ahmedabad, Gujarat, India</p>
             </div>
 
             <div className="flex items-center gap-3">

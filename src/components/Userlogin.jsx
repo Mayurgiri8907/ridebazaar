@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form"
 import axios from "../utils/axios";
@@ -15,61 +15,94 @@ const Userlogin = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
 
-  
+
 
   const handleLogin = async (data) => {
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const payload = {
-      email: data.loginemail,
-      password: data.loginpassword,
+      const payload = {
+        email: data.loginemail,
+        password: data.loginpassword,
+      };
+
+      const res = await axios.post("/api/user/", payload);
+
+      const expiryTime = Date.now() + 60 * 60 * 1000; // 1 hour
+
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("tokenExpiry", expiryTime);
+
+      toast.success("Login Successful ✅");
+
+      reset();
+      navigate("/");
+      window.location.reload();
+
+    } catch (err) {
+      const message =
+        err.response?.data?.message || "Login failed";
+
+      toast.error(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSignup = async (data) => {
+    try {
+      setLoading(true);
+
+      const res = await axios.post("/api/user/singup", data);
+
+      const expiryTime = Date.now() + 60 * 60 * 1000; // 1 hour
+
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("tokenExpiry", expiryTime);
+      toast.success("Signup Successful 🎉");
+
+      reset();
+      navigate("/"); // better UX
+      window.location.reload();
+
+    } catch (err) {
+      const message =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Signup failed";
+
+      toast.error(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const checkTokenExpiry = () => {
+      const expiry = localStorage.getItem("tokenExpiry");
+
+      if (!expiry) return;
+
+      if (Date.now() > expiry) {
+        //  Token expired
+        localStorage.removeItem("token");
+        localStorage.removeItem("tokenExpiry");
+
+        toast.info("Session expired. Please login again.");
+
+        navigate("/"); // redirect home/login
+        window.location.reload();
+      }
     };
 
-    const res = await axios.post("/api/user/", payload);
+    // Run immediately
+    checkTokenExpiry();
 
-    localStorage.setItem("token", res.data.token);
+    // Check every 1 minute
+    const interval = setInterval(checkTokenExpiry, 60 * 1000);
 
-    toast.success("Login Successful ✅");
-
-    reset();
-    navigate("/");
-    window.location.reload();
-
-  } catch (err) {
-    const message =
-      err.response?.data?.message || "Login failed";
-
-    toast.error(message);
-  } finally {
-    setLoading(false);
-  }
-};
-
-const handleSignup = async (data) => {
-  try {
-    setLoading(true);
-
-    const res = await axios.post("/api/user/singup", data);
-
-    localStorage.setItem("token", res.data.token);
-    toast.success("Signup Successful 🎉");
-
-    reset();
-    navigate("/"); // better UX
-    window.location.reload();
-
-  } catch (err) {
-    const message =
-      err.response?.data?.message ||
-      err.response?.data?.error ||
-      "Signup failed";
-
-    toast.error(message);
-  } finally {
-    setLoading(false);
-  }
-};
+    return () => clearInterval(interval);
+  }, []);
 
 
   return (
@@ -77,12 +110,12 @@ const handleSignup = async (data) => {
 
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 overflow-hidden">
 
-        {/* 🔹 TITLE */}
+        {/*  TITLE */}
         <h2 className="text-2xl font-semibold text-center mb-6">
           {activeTab === "login" ? "Login Form" : "Signup Form"}
         </h2>
 
-        {/* 🔹 TAB SWITCH */}
+        {/*  TAB SWITCH */}
         <div className="relative flex border rounded-xl overflow-hidden mb-6">
           <button
             onClick={() => setActiveTab("login")}
@@ -112,7 +145,7 @@ const handleSignup = async (data) => {
           />
         </div>
 
-        {/* 🔹 FORMS CONTAINER */}
+        {/*  FORMS CONTAINER */}
         <div className="relative w-full h-auto overflow-hidden">
 
           {/* LOGIN FORM */}
@@ -159,7 +192,7 @@ const handleSignup = async (data) => {
                   "Login"
                 )}
               </button>
-                
+
               <p className="text-center text-sm">
                 Not a member?{" "}
                 <span
@@ -194,7 +227,7 @@ const handleSignup = async (data) => {
                   className="w-full p-3 border rounded-xl outline-none focus:border-blue-500"
                   {...register("email")}
                 />
-                
+
               </div>
 
               {/* CONFIRM PASSWORD */}

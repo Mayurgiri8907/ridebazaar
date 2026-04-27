@@ -19,14 +19,14 @@ const Rate = () => {
   return (
     <div className="bg-gray-100 py-12 px-4">
 
-      {/* 🔥 HEADING */}
+      {/*  HEADING */}
       <h1 className="mt-20 text-3xl font-bold text-center mb-10">
         Our <span className="text-blue-600">Rental Rates</span>
       </h1>
 
       <div className="max-w-7xl mx-auto space-y-12">
 
-        {/* 🚗 CAR SECTION */}
+        {/*  CAR SECTION */}
         <div>
           <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
             <Car className="text-blue-600" /> Cars
@@ -57,7 +57,7 @@ const Rate = () => {
           </div>
         </div>
 
-        {/* 🏍️ BIKE SECTION */}
+        {/*  BIKE SECTION */}
         <div>
           <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
             <Bike className="text-blue-600" /> Bikes
